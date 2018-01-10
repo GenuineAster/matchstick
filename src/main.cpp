@@ -131,7 +131,6 @@ std::vector<StringType> tokenize(const MarkovConfig &config, const StringType &i
 	std::size_t token_start = 0;
 	for (int i = 0; i < input.length(); ++i) {
 		// process special tokens and ignored tokens first
-		// special tokens are stored as-is and are not modified or split by the tokenize engine
 		{
 			int whitespace_index = i;
 			while ((input[whitespace_index] < -1 || input[whitespace_index] > 255 || ! std::isspace(input[whitespace_index])) && whitespace_index < input.size())
@@ -142,6 +141,7 @@ std::vector<StringType> tokenize(const MarkovConfig &config, const StringType &i
 				i = whitespace_index+1;
 				continue;
 			} else if (std::find(config.special_tokens.begin(), config.special_tokens.end(), tok) != config.special_tokens.end()) {
+				// special tokens are stored as-is and are not modified or split by the tokenize engine
 				token_start = whitespace_index+1;
 				i = whitespace_index+1;
 				tokens.push_back(tok);
@@ -248,19 +248,17 @@ int main(int argc, char **argv) {
 	std::random_device rd;
 	std::mt19937 mt(rd());
 	std::uniform_int_distribution<std::uint64_t> dist(0, unique_hashed_tokens.size()-1);
-	std::uniform_int_distribution<std::uint64_t> complexity_dist(0, 45);
 
 	for (int iteration = 0; iteration < 20; ++iteration) {
 		std::vector<std::uint64_t> output;
 
 		uint64_t strain_length = 0;
 		for (int i = 0; i < 100; ++i) {
-			const uint64_t random_graph_complexity = 99;// complexity_dist(mt);
 			if (output.size() > 3 && output[i-3] == output[i-2] && output[i-2] == output[i-1]) {
 				break;
 			}
 
-			if (random_graph_complexity == 0 || strain_length == 0) {
+			if (strain_length == 0) {
 				uint64_t next_word_id = 0;
 				do {
 					next_word_id = hash_to_id[unique_hashed_tokens[dist(mt)]];
@@ -268,7 +266,7 @@ int main(int argc, char **argv) {
 
 				output.push_back(next_word_id);
 				strain_length = 1;
-			} else if (output.size() == 1 || random_graph_complexity == 1 || strain_length == 1) {
+			} else if (output.size() == 1 || strain_length == 1) {
 				const auto &next_vec = graph[output[i-1]];
 				if (next_vec.empty())
 					break;
