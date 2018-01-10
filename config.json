@@ -1,0 +1,95 @@
+{
+	"markov": {
+		"source": "inputs/data_oriented.txt",
+		"ignore-token": "^http.*",
+		"minimum-chain-tokens": 4,
+		"punctuation": [
+			{
+				"value": ".",
+				"capitalize-next": true,
+				"terminate-chain": false,
+				"space-before": false
+			},
+			{
+				"value": "!",
+				"capitalize-next": true,
+				"terminate-chain": false,
+				"space-before": false
+			},
+			{
+				"value": "?",
+				"capitalize-next": true,
+				"terminate-chain": false,
+				"space-before": false
+			},
+			{
+				"value": ",",
+				"capitalize-next": false,
+				"terminate-chain": false,
+				"space-before": false
+			},
+			{
+				"value": ":",
+				"capitalize-next": false,
+				"terminate-chain": false,
+				"space-before": false
+			},
+			{
+				"value": ";",
+				"capitalize-next": false,
+				"terminate-chain": false,
+				"space-before": false
+			},
+			{
+				"value": "(",
+				"capitalize-next": false,
+				"terminate-chain": false,
+				"space-before": true
+			},
+			{
+				"value": ")",
+				"capitalize-next": false,
+				"terminate-chain": false,
+				"space-before": false
+			},
+			{
+				"value": "+",
+				"capitalize-next": false,
+				"terminate-chain": false,
+				"space-before": true
+			},
+			{
+				"value": "\"",
+				"capitalize-next": false,
+				"terminate-chain": false,
+				"space-before": true
+			},
+			{
+				"value": "\n",
+				"capitalize-next": true,
+				"terminate-chain": true,
+				"space-before": false
+			}
+		],
+		"separators": [
+			{"value": " "}
+		],
+		"special-tokens": [
+			{"value": "C++"},
+			{"value": "c++"},
+			{"value": "I"},
+			{"value": "i.e"},
+			{"value": "e.g"},
+			{"value": "xD"},
+			{"value": ":|"},
+			{"value": ":D"},
+			{"value": ":p"},
+			{"value": ":P"},
+			{"value": ":("},
+			{"value": ":)"},
+			{"value": ":o"},
+			{"value": ":/"},
+			{"value": ":\\"}
+		]
+	}
+}
